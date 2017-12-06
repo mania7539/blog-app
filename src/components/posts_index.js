@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import { connect } from "react-redux";
 import { fetchPosts } from "../actions";
 
@@ -20,17 +21,41 @@ class PostsIndex extends Component {
      * component until after we do some pre-loading operation. react is always going to eagerly load
      * itself or render the component we should say as soon as it can.
      */
+    renderPosts() {
+        return _.map(this.props.posts, post => {
+            return (
+                <li className="list-group-item" key={post.id}>
+                    {post.title}
+                </li>
+            );
+        })
+        // we don't have a map function to use for an object
+        // but we can use lodash for using map function of object
+    }
 
     render() {
+        console.log(this.props.posts);
+        // the console log is showing 2 times: after the first time DOM rendered, it logs.
+        // and after componentDidMount runs fetchPosts, it renders and logs again.
+
         return (
             <div>
-                Posts Index
+                <h3>Posts</h3>
+                <ul className="list-group">
+                    {this.renderPosts()}
+                </ul>
             </div>
         );
     }
 }
 
-export default connect(null, { fetchPosts })(PostsIndex);
+function mapStateToProps(state) {
+    return ({
+        posts: state.posts
+    });
+}
+
+export default connect(mapStateToProps, { fetchPosts })(PostsIndex);
 // the code below is as the same as the above ES6 code.
 // ```export default connect(null, { fetchPosts: fetchPosts })(PostsIndex);```
 //
