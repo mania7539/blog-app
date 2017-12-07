@@ -45,10 +45,10 @@ class PostsNew extends Component {
                         component={this.renderField}
                     />
                     <Field
-                        label="Tags"
-                        name="tags"
+                        label="Categories"
+                        name="categories"
                         component={this.renderField}
-                    />                    
+                    />
                     <Field
                         label="Post Content"
                         name="content"
@@ -75,9 +75,56 @@ class PostsNew extends Component {
     }
 }
 
+function validate(values) {
+    // console.log(values) -> {title:'asdf', categories: 'asdf', content: 'asdf'}
+    const errors = {};
+    // return an empty object if there's no error
+    //
+    // redux form assumes that there's absolutely nothing wrong
+    //  with our form.
+
+    // TODO: validate the inputs from "values"
+    // if (!values.title.length < 3) {
+    //     errors.title = "Title must be at least 3 characters!";
+    // }
+    if (!values.title) {
+        errors.title = "Enter a title!";
+    }
+    if (!values.categories) {
+        errors.categories = "Enter some categories";
+    }
+    if (!values.content) {
+        errors.content = "Enter some content please";
+    }
+
+    return errors;
+    // if 'errors' is an empty object {}, the form is fine to submit.
+    //
+    // however if 'errors' has *any* property, redux form will assume that in fact there's
+    //  an issue with the form, and it fails validation, 
+    //  and it should not submit the form at all.
+}
+//
+// this function 'validate' will be passed to reduxForm in 
+// 'validate' property.
+//
+// the 'values' argument is an object that contains 
+// all the different values that the user has entered
+// into the form.
+
+
 export default reduxForm({
+    validate,
     form: "PostsNewForm"
 })(PostsNew);
+//
+// the code below is as the same as the above one:
+// ```
+// export default reduxForm({
+//     validate: validate,
+//     form: "PostsNewForm"
+// })(PostsNew);
+// ```
 //
 // Definition: Redux Form
 //
