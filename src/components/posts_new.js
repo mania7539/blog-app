@@ -11,6 +11,7 @@ class PostsNew extends Component {
                     type="text"
                     {...field.input}
                 />
+                {field.meta.error}
             </div>
         );
     }
@@ -33,8 +34,10 @@ class PostsNew extends Component {
     // which returns the input component, the Field component needs to be responsible for 
     // handling any changes of this input.
     //
+    // ```{field.meta.error}``` show validation errors to the user 
+    //
     // NOTE: this function is for the 'component' props in Field component.
-
+    //
     render() {
         return (
             <div>
