@@ -67,7 +67,13 @@ class PostsNew extends Component {
         // but we only want to go back after a post has been created
         // or it will go into a race condition to fetch the new post and render all posts.
 
-        
+        // ```
+        // createPost(values, () => {
+        //     this.props.history.push("/");
+        // });
+        // ```
+        // the code above will still work, but it won't be injected to this.props, so can only be used in this component
+        //
         this.props.createPost(values, () => {
             this.props.history.push("/");
         });
