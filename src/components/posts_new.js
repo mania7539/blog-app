@@ -61,7 +61,20 @@ class PostsNew extends Component {
         // 'this' === component
         console.log(values);
 
-        this.props.createPost(values);
+        // ```this.props.history.push("/");```
+        // the purpose of above code: 
+        // go back to the root route of our application, 
+        // but we only want to go back after a post has been created
+        // or it will go into a race condition to fetch the new post and render all posts.
+
+        
+        this.props.createPost(values, () => {
+            this.props.history.push("/");
+        });
+        // we want to go back after a post has been created with the below code:
+        // ```this.props.createPost(values);```
+        // so add the 2nd argument which is an arrow function to the above code for that.
+        //
     }
 
     render() {
