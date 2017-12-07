@@ -50,6 +50,7 @@ class PostsNew extends Component {
         //  another component that will be used to display this field component.
         //
         // we do nothing to set the input data type such as: text, checkbox, or etc in Field.
+        // however, we set the input data type in the passed function of "component" property of "Field" .
         //
         // ```component={this.renderTitleField}```
         // we're not putting any parentheses here, we are just providing a reference to a 
