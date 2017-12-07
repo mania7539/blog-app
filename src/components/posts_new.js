@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { createPost } from "../actions";
 
 class PostsNew extends Component {
     renderField(field) {
@@ -59,6 +61,7 @@ class PostsNew extends Component {
         // 'this' === component
         console.log(values);
 
+        this.props.createPost(values);
     }
 
     render() {
@@ -161,7 +164,15 @@ function validate(values) {
 export default reduxForm({
     validate,
     form: "PostsNewForm"
-})(PostsNew);
+})(
+    connect(null, { createPost })(PostsNew)
+);
+// the below code is what we have before adding our connect helper:
+//
+// export default reduxForm({
+//     validate,
+//     form: "PostsNewForm"
+// })(PostsNew);
 //
 // the code below is as the same as the above one:
 // ```
