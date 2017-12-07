@@ -15,6 +15,7 @@ import promise from "redux-promise";
 import reducers from './reducers';
 import PostsIndex from "./components/posts_index";
 import PostsNew from "./components/posts_new";
+import PostsShow from "./components/posts_show";
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -24,9 +25,19 @@ ReactDOM.render(
       <div>
         <Switch>
           <Route path="/posts/new" component={PostsNew} />
+          <Route path="/posts/:id" component={PostsShow} />
           <Route path="/" component={PostsIndex} />
         </Switch>
       </div>
     </BrowserRouter>
   </Provider>
   , document.querySelector('.container'));
+/**
+ * ```<Route path="/posts/:id" component={PostsShow} />```
+ * The ':id' here is a wildcard of sorts, so react-router's going to
+ * take whatever is in that little position URL and pass it as a property or a prop
+ * to our PostsShow component.
+ * 
+ * And we want ```<Route path="/posts/:id" component={PostsShow} />```
+ * to be the 2nd route, so '/posts/new' won't be recognized as '/posts/:id'
+ */
