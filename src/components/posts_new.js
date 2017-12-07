@@ -38,10 +38,19 @@ class PostsNew extends Component {
     //
     // NOTE: this function is for the 'component' props in Field component.
     //
+
+    onSubmit(values) {
+        // 'this' === component
+        console.log(values);
+        
+    }
+
     render() {
+        const { handleSubmit } = this.props;
+
         return (
             <div>
-                <form>
+                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <Field
                         label="Title for Post"
                         name="title"
@@ -57,6 +66,9 @@ class PostsNew extends Component {
                         name="content"
                         component={this.renderField}
                     />
+                    <button type="submit" className="btn btn-primary">
+                        Submit
+                    </button>
                 </form>
             </div>
         );
@@ -75,6 +87,17 @@ class PostsNew extends Component {
         // we can pass props to the function assigned to 'component' property 
         // and get the props from the argument (field) of the function
         //
+        // 'handleSubmit' takes a function that we defined and runs the redux-form.
+        // 'handleSubmit' says Ok, we need to validate the form, then redux-form says
+        // if everthing looks good and valid, it's ready to be submitted, then
+        // it calls the callback ```this.onSubmit.bind(this)``` and passes us the values
+        // out of the form to work.
+        //
+        // we are calling ```.bind(this)``` because we are passing this on submit as a callback function
+        // that will be executed in some different context outsie of our component, so to make sure
+        // that we still have access to the correct 'this' being essentially our component inside of this thing,
+        // we add on the ```.bind(this)```
+
     }
 }
 
