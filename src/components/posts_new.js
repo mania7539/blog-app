@@ -11,7 +11,7 @@ class PostsNew extends Component {
                     type="text"
                     {...field.input}
                 />
-                {field.meta.error}
+                {field.meta.touched ? field.meta.error : ""}
             </div>
         );
     }
@@ -36,13 +36,16 @@ class PostsNew extends Component {
     //
     // ```{field.meta.error}``` show validation errors to the user 
     //
+    // ```field.meta.touched``` is a state property of Field which means 
+    // that a user has "selected" or "focused" an input and "then focused out" of the input.
+    //
     // NOTE: this function is for the 'component' props in Field component.
     //
 
     onSubmit(values) {
         // 'this' === component
         console.log(values);
-        
+
     }
 
     render() {
