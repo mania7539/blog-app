@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 
 class PostsNew extends Component {
-    renderTitleField(field) {
+    renderField(field) {
         return (
-            <div>
+            <div className="form-group">
+                <label>{field.label}</label>
                 <input
+                    className="form-control"
                     type="text"
                     {...field.input}
                 />
@@ -38,8 +40,19 @@ class PostsNew extends Component {
             <div>
                 <form>
                     <Field
+                        label="Title for Post"
                         name="title"
-                        component={this.renderTitleField}
+                        component={this.renderField}
+                    />
+                    <Field
+                        label="Tags"
+                        name="tags"
+                        component={this.renderField}
+                    />                    
+                    <Field
+                        label="Post Content"
+                        name="content"
+                        component={this.renderField}
                     />
                 </form>
             </div>
@@ -55,6 +68,10 @@ class PostsNew extends Component {
         // ```component={this.renderTitleField}```
         // we're not putting any parentheses here, we are just providing a reference to a 
         // function because the field will call that function at some point in the future
+        //
+        // we can pass props to the function assigned to 'component' property 
+        // and get the props from the argument (field) of the function
+        //
     }
 }
 
