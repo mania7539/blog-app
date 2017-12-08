@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchPost } from "../actions";
 
 class PostsShow extends Component {
@@ -15,7 +16,17 @@ class PostsShow extends Component {
         // the 'params' property inside of it is an object that lists all the different wildcard tokens 
         //  that exists inside the URL. (which means ':id' here, defined in Route path of ./src/index.js)
         //
+
         this.props.fetchPost(id);
+        // this method above will make sure every time in posts_show, we will refetch the post from backedn again.
+        //
+        // ```
+        // if (!this.props.post) {
+        //     console.log("fetchPost in posts_show.");
+        //     this.props.fetchPost(id);
+        // }
+        // ```
+        // this method above will only fire up when current post doesn't exist.
     }
 
     render() {
@@ -29,6 +40,9 @@ class PostsShow extends Component {
 
         return (
             <div>
+                <div className="text-xs-right">
+                    <Link to="/" className="btn btn-primary">Back to Index</Link>
+                </div>
                 <h3>{post.title}</h3>
                 <h6>Categories: {post.categories}</h6>
                 <p>{post.content}</p>
