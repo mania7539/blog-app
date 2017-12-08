@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchPost } from "../actions";
+import { fetchPost, deletePost } from "../actions";
 
 class PostsShow extends Component {
 
@@ -29,6 +29,16 @@ class PostsShow extends Component {
         // this method above will only fire up when current post doesn't exist.
     }
 
+    onDeleteClick() {
+        const { id } = this.props.match.params;
+        this.props.deletePost(id, () => {
+            this.props.history.push("/");
+        });
+        // ```this.props.deletePost(this.props.post.id);``` is not a good idea,
+        // since there's situation when the post is still being fetched from the backend
+        // and the value would be 'undefined'
+    }
+
     render() {
         const { post } = this.props;
 
@@ -39,9 +49,14 @@ class PostsShow extends Component {
         }
 
         return (
-            <div>
+            <div id="post-show">
                 <div className="text-xs-right">
                     <Link to="/" className="btn btn-primary">Back to Index</Link>
+                    <button
+                        onClick={this.onDeleteClick.bind(this)}
+                        className="btn btn-danger pull-xs-right">
+                        Delete Post
+                    </button>
                 </div>
                 <h3>{post.title}</h3>
                 <h6>Categories: {post.categories}</h6>
@@ -68,4 +83,4 @@ function mapStateToProps({ posts }, ownProps) {
 // }
 // ```
 
-export default connect(mapStateToProps, { fetchPost })(PostsShow);
+export default connect(mapStateToProps, { fetchPost, deletePost })(PostsShow);
