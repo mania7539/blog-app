@@ -1,8 +1,12 @@
 import _ from "lodash";
-import { FETCH_POSTS, FETCH_POST } from "../actions/index";
+import { FETCH_POSTS, FETCH_POST, DELETE_POST } from "../actions/index";
 
 export default function(state = {}, action) {
     switch (action.type) {
+        case DELETE_POST:
+            return _.omit(state, action.payload);
+            // if 'action.payload' (which is "id") is in 'state', 
+            // then drop it and recreate it
         case FETCH_POST:
             console.log(`fetched post id=${action.payload.data.id}`);
             return { ...state, [action.payload.data.id]: action.payload.data};
